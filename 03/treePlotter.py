@@ -12,9 +12,9 @@ arrow_args = dict(arrowstyle="<-")
 
 def getNumLeafs(myTree):
     numLeafs = 0
-    firstStr = myTree.keys()[0]
+    firstStr = list(myTree.keys())[0]
     secondDict = myTree[firstStr]
-    for key in secondDict.keys():
+    for key in secondDict.keys():    #如果还是字典，则用递归
         if type(secondDict[
                     key]).__name__ == 'dict':  # test to see if the nodes are dictonaires, if not they are leaf nodes
             numLeafs += getNumLeafs(secondDict[key])
@@ -25,7 +25,7 @@ def getNumLeafs(myTree):
 
 def getTreeDepth(myTree):
     maxDepth = 0
-    firstStr = myTree.keys()[0]
+    firstStr = list(myTree.keys())[0]
     secondDict = myTree[firstStr]
     for key in secondDict.keys():
         if type(secondDict[
@@ -52,7 +52,7 @@ def plotMidText(cntrPt, parentPt, txtString):
 def plotTree(myTree, parentPt, nodeTxt):  # if the first key tells you what feat was split on
     numLeafs = getNumLeafs(myTree)  # this determines the x width of this tree
     depth = getTreeDepth(myTree)
-    firstStr = myTree.keys()[0]  # the text label for this node should be this
+    firstStr = list(myTree.keys())[0]  # the text label for this node should be this
     cntrPt = (plotTree.xOff + (1.0 + float(numLeafs)) / 2.0 / plotTree.totalW, plotTree.yOff)
     plotMidText(cntrPt, parentPt, nodeTxt)
     plotNode(firstStr, cntrPt, parentPt, decisionNode)
@@ -86,12 +86,12 @@ def createPlot(inTree):
 
 
 # def createPlot():
-#    fig = plt.figure(1, facecolor='white')
-#    fig.clf()
-#    createPlot.ax1 = plt.subplot(111, frameon=False) #ticks for demo puropses
-#    plotNode('a decision node', (0.5, 0.1), (0.1, 0.5), decisionNode)
-#    plotNode('a leaf node', (0.8, 0.1), (0.3, 0.8), leafNode)
-#    plt.show()
+#     fig = plt.figure(1, facecolor='white')
+#     fig.clf()
+#     createPlot.ax1 = plt.subplot(111, frameon=False)
+#     plotNode('a decision node', (0.5, 0.1), (0.1, 0.5), decisionNode)
+#     plotNode('a leaf node', (0.8, 0.1), (0.3, 0.8), leafNode)
+#     plt.show()
 
 def retrieveTree(i):
     listOfTrees = [{'no surfacing': {0: 'no', 1: {'flippers': {0: 'no', 1: 'yes'}}}},
@@ -100,3 +100,6 @@ def retrieveTree(i):
     return listOfTrees[i]
 
 # createPlot(thisTree)
+
+# a = {'no surfacing': {0: 'no', 1: {'flippers': {0: 'no', 1: 'yes'}}}}
+# print(getNumLeafs(a))
